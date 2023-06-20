@@ -11,7 +11,7 @@ export let expires_in = 0;
 export let update_time: Date;
 
 // 临时使用的ACCESS_TOKEN，2小时内有效
-export const tmp_token = "67_dXKwx6RdhBKn0FDUBEgkPJrM8TRVxAMKDZsVNscbRwXytPc_OFVJ1UVz066xTmt20Hkz8jJgQC86v2HTXGz-R8o5tPVLKx-HxKd6OKml6rG4BF9xT2e1tF_5xBsQIReAIAXPY";
+// export const tmp_token = "67_fgeEl5xauAvuOLLJJPZyPMPv1iRDofCeTFi5t2D0-1E9KuEitlRRE6nkAKae4nihu2c9QLPY--rih0jom4zca-lOuk1fO61mhNypDCgPtwWIpTS62ElET-5wf6cBNGfAJATFY";
 
 export const handler = {
     async GET(_req: Request, _ctx: HandlerContext): Promise<Response> {

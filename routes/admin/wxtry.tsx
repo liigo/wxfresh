@@ -1,25 +1,40 @@
 import { PageProps, HandlerContext } from "$fresh/server.ts";
-import { tmp_token } from "./wxtoken.tsx";
+import { access_token } from "./wxtoken.tsx";
 
 export const handler = {
     async GET(_req: Request, _ctx: HandlerContext): Promise<Response> {
         const url = new URL(_req.url);
-        const op = url.searchParams.get("op") || "";
+        const params = url.searchParams;
+        const op = params.get("op") || "";
         console.log("wxtry, op=", op);
         let result: string;
         if (op === "wxip") {
-            const url = "https://api.weixin.qq.com/cgi-bin/get_api_domain_ip?access_token=" + tmp_token;
+            const url = "https://api.weixin.qq.com/cgi-bin/get_api_domain_ip?access_token=" + access_token;
             const res = await fetch(url);
             result = await res.text();
         } if (op === "addmenu") {
-            const url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + tmp_token;
+            const url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + access_token;
             const res = await fetch(url, { method: "POST", body: JSON.stringify(menus), });
             result = await res.text(); // result={"errcode":0,"errmsg":"ok"}
         } if (op == "getmenu") {
-            const url = "https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=" + tmp_token;
+            const url = "https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=" + access_token;
             const res = await fetch(url);
             result = await res.text();
-        } else {
+        } if (op === "send") {
+            // 给指定用户发送模板消息
+            const value = params.get("value") || "106";
+            const url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + access_token;
+            const json = {
+                touser: "oeWFk6pnzcIqihfKGI1B-L9OeJ7I", // 庄子略懂
+                template_id: "hg1F2yVMBPI031debW532bkQWihD5oLCbDVGdrVZOgk", // 测试用模板
+                data: {
+                    value: { value: value, color: "#FF0000" },
+                    datetime: { value: new Date().toLocaleString() },
+                },
+            };
+            const resp = await fetch(url, { method: "POST", body: JSON.stringify(json), });
+            result = await resp.text();
+        }else {
             result = `not support this op (${op})`;
         }
         return await _ctx.render({op, result});

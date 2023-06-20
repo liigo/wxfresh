@@ -13,7 +13,7 @@ export class WxXml {
     public getMsgDataId():string { return this.get("MsgDataId"); }
     public getPicUrl():string { return this.get("PicUrl"); }
     public getMediaId():string { return this.get("MediaId"); }
-    // Event: "CLICK", ...
+    // Event: "CLICK", "VIEW", "subscribe", "unsubscribe", ...
     public getEvent():string { return this.get("Event"); }
     public getEventKey():string { return this.get("EventKey"); }
     

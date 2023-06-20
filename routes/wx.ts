@@ -15,7 +15,7 @@ export const handler = async (_req: Request, _ctx: HandlerContext): Promise<Resp
         return new Response(echostr); // 回复认证报文
     }
     const body = await _req.text();
-    console.log("wx body", body);
+    console.log("====> wx body:", body);
     const xmlMsg = new WxXml(body);
     return await handleWxMsg(xmlMsg);
 }
@@ -38,7 +38,7 @@ function handleWxMsg(msg: WxXml): Response {
 }
 
 function XmlResponse(xml: string): Response {
-  console.log("---- reply", xml);
+  console.log("----> reply:", xml);
   return new Response(xml, { status: 200, headers: [["Content-Type","text/xml"]] });
 }
 

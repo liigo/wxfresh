@@ -6,21 +6,21 @@ export const handler = {
         const url = new URL(_req.url);
         const params = url.searchParams;
         const op = params.get("op") || "";
-        console.log("wxtry, op=", op);
+        console.log(`wxtry, op = |${op}|`);
         let result: string;
         if (op === "wxip") {
             const url = "https://api.weixin.qq.com/cgi-bin/get_api_domain_ip?access_token=" + access_token;
             const res = await fetch(url);
             result = await res.text();
-        } if (op === "addmenu") {
+        } else if (op === "addmenu") {
             const url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + access_token;
             const res = await fetch(url, { method: "POST", body: JSON.stringify(menus), });
             result = await res.text(); // result={"errcode":0,"errmsg":"ok"}
-        } if (op == "getmenu") {
+        } else if (op == "getmenu") {
             const url = "https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=" + access_token;
             const res = await fetch(url);
             result = await res.text();
-        } if (op === "send") {
+        } else if (op === "send") {
             // 给指定用户发送模板消息
             const value = params.get("value") || "106";
             const url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + access_token;
@@ -34,7 +34,7 @@ export const handler = {
             };
             const resp = await fetch(url, { method: "POST", body: JSON.stringify(json), });
             result = await resp.text();
-        }else {
+        } else {
             result = `not support this op (${op})`;
         }
         return await _ctx.render({op, result});

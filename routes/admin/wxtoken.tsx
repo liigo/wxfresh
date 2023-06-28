@@ -10,8 +10,8 @@ export let access_token = "";
 export let expires_in = 0;
 export let update_time: Date;
 
-// 临时使用的ACCESS_TOKEN，2小时内有效
-// export const tmp_token = "67_fgeEl5xauAvuOLLJJPZyPMPv1iRDofCeTFi5t2D0-1E9KuEitlRRE6nkAKae4nihu2c9QLPY--rih0jom4zca-lOuk1fO61mhNypDCgPtwWIpTS62ElET-5wf6cBNGfAJATFY";
+// 临时使用的ACCESS_TOKEN（开发阶段Fresh应用会自动重启导致token经常失效，此处写死更方便一些）
+access_token = "70_ciZdBciYWD3Wk0Cx2K7IDOp3l6mhQHlLEdOfNR30Tmnlrc6hryScb6XbBAe_VyaQlNSh4cU2XdtJvxMxF1-Vsn5Rj7Q3vOUkVC-6Kh2SecSFCHcLvJmaZt1WVwgSWYgADALPR";
 
 export const handler = {
     async GET(_req: Request, _ctx: HandlerContext): Promise<Response> {

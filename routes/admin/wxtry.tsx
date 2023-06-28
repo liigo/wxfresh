@@ -34,6 +34,34 @@ export const handler = {
             };
             const resp = await fetch(url, { method: "POST", body: JSON.stringify(json), });
             result = await resp.text();
+        } else if (op === "getqrcode") {
+            // 用于获取二维码和设备Id
+            const product_id = 61805; // CW家用探测器（测试设备）
+            const url = `https://api.weixin.qq.com/device/getqrcode?access_token=${access_token}&product_id=${product_id}`;
+            const resp = await fetch(url);
+            result = await resp.text();
+        } else if (op === "getdevices") {
+            const openid = "oeWFk6pnzcIqihfKGI1B-L9OeJ7I"; // 公众号粉丝：庄子略懂
+            const url = `https://api.weixin.qq.com/device/get_bind_device?access_token=${access_token}&openid=${openid}`;
+            const resp = await fetch(url);
+            result = await resp.text();
+        } else if (op === "ilink_reg") {
+            const url = `https://api.weixin.qq.com/ilink/api/cloud_register_device?access_token=${access_token}`;
+            const body = {
+                product_id: 61805, // CW家用探测器（测试设备）
+                iot_device_list: [ { sn: "CW111" }],
+            };
+            const resp = await fetch(url, { method: "POST", body: JSON.stringify(body) });
+            result = await resp.text();
+            // 调用失败，提示无权限：
+            // {"iot_device_list":[],"errcode":-40005,"errmsg":"no permission. unknown appid, please check","err_device_list":[]}
+        } else if (op === "ilink_qrcode") {
+            const url = `https://api.weixin.qq.com/ilink/api/mmiot/get_device_qrcode?access_token=${access_token}`;
+            const body = {
+                ilink_im_sdk_id: "", // CW111's device_id
+            };
+            const resp = await fetch(url, { method: "POST", body: JSON.stringify(body) });
+            result = await resp.text();
         } else {
             result = `not support this op (${op})`;
         }
